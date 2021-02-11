@@ -1,1 +1,0 @@
-web: gunicorn hazmat.wsgi --log-file -
