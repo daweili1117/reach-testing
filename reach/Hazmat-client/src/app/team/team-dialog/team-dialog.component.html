@@ -1,0 +1,45 @@
+<mat-toolbar>
+    <span class="fill-remaining-space"></span>
+    <span class="header" *ngIf="action=='New'">New Crew</span>
+    <span class="header" *ngIf="action=='Edit'">Update Crew</span>
+    <span class="fill-remaining-space"></span>
+  </mat-toolbar>
+  <form [formGroup]="teamFormGroup" class="normal-form">
+    <large *ngFor="let error of errormessages" class="error-message">
+      {{error}}
+    </large>
+    <mat-grid-list cols="1" rowHeight="300px">
+      <mat-grid-tile class="mat-grid-tile">
+        <div class="controls-container">
+            <input type="hidden" formControlName="TeamID">
+          <mat-form-field teamFormGroup class="common-mat-input" id="Name">
+            <mat-label>Crew Name</mat-label>
+            <input matInput placeholder="Enter Crew Name*" formControlName="Name">
+            <mat-error *ngIf="teamFormGroup.controls['Name'].errors?.required">This field is mandatory.</mat-error>
+            <mat-error *ngIf="teamFormGroup.controls['Name'].errors?.serverError">{{teamFormGroup.controls['Name'].errors?.serverError}}</mat-error>
+          </mat-form-field>
+          <mat-form-field teamFormGroup class="common-mat-input" id="Description">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="Enter Description*" formControlName="Description">
+            <mat-error *ngIf="teamFormGroup.controls['Description'].errors?.required">This field is mandatory.</mat-error>
+            <mat-error *ngIf="teamFormGroup.controls['Description'].errors?.serverError">{{teamFormGroup.controls['Description'].errors?.serverError}}</mat-error>
+          </mat-form-field>
+          <div>
+            <mat-label class="mat-radio-label">Status</mat-label>
+            <mat-radio-group aria-label='Status' formControlName="Status">
+                <mat-radio-button value="true" [checked]="teamFormGroup.controls['Status'].value === true">Available</mat-radio-button>
+                <mat-radio-button value="false" [checked]="teamFormGroup.controls['Status'].value === false">Not Available</mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="teamFormGroup.controls['Status'].errors?.required && (teamFormGroup.controls['Status'].dirty || teamFormGroup.controls['Status'].touched)">This field is mandatory.</mat-error>
+            <mat-error *ngIf="teamFormGroup.controls['Status'].errors?.serverError">{{teamFormGroup.controls['Status'].errors?.serverError}}</mat-error>
+          </div>
+          <div class="button-row">
+            <button mat-raised-button color="primary" (click)="saveCrew(teamFormGroup.value)" [disabled]="!teamFormGroup.valid">Submit</button>
+            <button mat-stroked-button color="Basic" (click)="cancelCrew()">Cancel</button>
+          </div>
+        </div>
+      </mat-grid-tile>
+      </mat-grid-list>
+  
+  </form>
+  
