@@ -18,7 +18,7 @@ import { PeopleService } from '../people/people.service';
   styleUrls: ['./devices.component.scss'],
 })
 export class DevicesComponent implements OnInit {
-  displayedColumns: string[] = ['DeviceID', 'IP', 'Description', 'Type', 'Person', 'Status', 'Actions'];
+  displayedColumns: string[] = ['DeviceID', 'Description', 'Type', 'Person', 'Status', 'IP', 'Actions'];
   dataSource= new MatTableDataSource<DeviceInfo>();
   
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -113,7 +113,13 @@ export class DevicesComponent implements OnInit {
       }
       });
   }
-  
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
   deleteDevice(id: DevicesData) {
     var displaymessage: string = 'Are you sure you want to remove this device?';
     this.openDialog(displaymessage, id);

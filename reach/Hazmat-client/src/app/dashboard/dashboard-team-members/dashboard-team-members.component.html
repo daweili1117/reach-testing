@@ -2,18 +2,26 @@
 
 <mat-card *ngFor="let member of team.crew">
   <div>
-    <img id="image" src={{member.image}}>
+    <img id="image" *ngIf="member.ImageUrl" src={{member.ImageUrl}}>
+    <img id="image" *ngIf="!member.ImageUrl" src='/static/No Photo/No-photo-available.jpg'>
   </div>
   <div id="nameIcons">
-    <h4>{{member.lName}}, {{member.fName}}</h4>
+    <h4>{{member.LastName}}, {{member.FirstName}}</h4>
     <br>
     <mat-icon>signal_wifi_4_bar</mat-icon>
     <mat-icon>battery_full</mat-icon>
     <span>{{member.battery}}%</span>
     <br>
-    <mat-icon>timer</mat-icon>
-    <span class="time">{{member.time1}}</span>
-    <span class="time">{{member.time2}}</span>
+    
+    <span style="width: 86px;display:inline-block;">Check-In : </span><span class="time"
+    style="width: 70px;display:inline-block;" *ngIf="member.CheckInTime">{{member.CheckInTime|date:'shortTime'}}</span>
+    <span class="time" *ngIf="!member.CheckInTime" style="width: 70px;display:inline-block;">--:--</span>
+    <span class="time" style="width: 50px;display:inline-block;background-color: greenyellow;">{{member.ElapsedCheckInTimer}}</span>
+    <br>
+    <span style="width: 86px;display:inline-block;">Check-Out : </span><span class="time" *ngIf="member.CheckOutTime" style="width: 70px;display:inline-block;">{{member.CheckOutTime|date:'shortTime'}}</span>
+    <span class="time" *ngIf="!member.CheckOutTime" style="width: 70px;display:inline-block;">--:--</span>
+    <span class="time" style="width: 50px;display:inline-block;background-color: indianred;">{{member.ElapsedCheckOutTimer}}</span>
+    
   </div>
   <mat-icon *ngIf="member.inDanger" style="color: #B00020;">warning</mat-icon>
   <div id="stats">

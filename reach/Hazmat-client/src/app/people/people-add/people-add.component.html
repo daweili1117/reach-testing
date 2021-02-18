@@ -13,6 +13,7 @@
     <mat-grid-list cols="2" rowHeight="400px">
       <mat-grid-tile class="mat-grid-tile">
         <img *ngIf="editPeople.ImageUrl" src='{{editPeople.ImageUrl}}' width=150px height=150px />
+        <img *ngIf="!editPeople.ImageUrl && action=='Edit'" src='/static/No Photo/No-photo-available.jpg' width=150px height=150px />
         <div class="controls-container">
           <mat-form-field appearance="standard" peopleFormGroup class="common-mat-input" id="ImageUrl">
             <mat-label>Upload Person Image</mat-label>
@@ -22,8 +23,9 @@
 
           <mat-form-field peopleFormGroup class="common-mat-input" id="FirstName">
             <mat-label>First Name*</mat-label>
-            <input matInput placeholder="Enter First Name*" formControlName="FirstName" ng-ip-address>
-            <mat-error *ngIf="peopleFormGroup.controls['FirstName'].errors?.required">This field is mandatory.</mat-error>
+            <input matInput placeholder="Enter First Name*" formControlName="FirstName">
+            <mat-error *ngIf="peopleFormGroup.controls['FirstName'].errors?.required">This field is mandatory</mat-error>
+            <mat-error *ngIf="peopleFormGroup.controls['FirstName'].errors?.pattern">Only alphabets allowed</mat-error>
             <mat-error *ngIf="peopleFormGroup.controls['FirstName'].errors?.fieldError">
               {{peopleFormGroup.controls['FirstName'].errors?.fieldError}}</mat-error>
           </mat-form-field>
@@ -31,14 +33,19 @@
           <mat-form-field peopleFormGroup class="common-mat-input" id="LastName">
             <mat-label>Last Name*</mat-label>
             <input matInput placeholder="Enter Last Name*" formControlName="LastName">
-            <mat-error *ngIf="peopleFormGroup.controls['LastName'].errors?.required">This field is mandatory.</mat-error>
+            <mat-error *ngIf="peopleFormGroup.controls['LastName'].errors?.required">This field is mandatory</mat-error>
+            <mat-error *ngIf="peopleFormGroup.controls['LastName'].errors?.pattern">Only alphabets allowed</mat-error>
             <mat-error *ngIf="peopleFormGroup.controls['LastName'].errors?.fieldError">
               {{peopleFormGroup.controls['LastName'].errors?.fieldError}}</mat-error>
           </mat-form-field>
 
           <mat-form-field peopleFormGroup class="common-mat-input" id="RoleID">
             <mat-label>Role</mat-label>
+            
             <mat-select placeholder="Choose Role" [(value)]="selectedRole" formControlName="RoleID">
+              <mat-option  [value]="null" >
+                -Unknown-
+              </mat-option>
               <mat-option *ngFor="let person_role of roles" [value]="person_role.value">
                 {{person_role.viewValue}}
               </mat-option>
@@ -124,7 +131,7 @@
             </mat-form-field>
           
           <div class="button-row">
-            <button mat-raised-button color="primary" (click)="savePerson(peopleFormGroup.value)">Submit</button>
+            <button mat-raised-button color="primary" (click)="savePerson(peopleFormGroup.value)" [disabled]="!peopleFormGroup.valid">Submit</button>
             <button mat-stroked-button color="Basic" (click)="cancelPerson()">Cancel</button>
           </div>
         </div>

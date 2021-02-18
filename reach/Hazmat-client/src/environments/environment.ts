@@ -5,8 +5,8 @@
 export const environment = {
 
   production: false,
-  // host: 'https://hazmat-reach-cat.herokuapp.com/',
-  host: 'http://127.0.0.1:8000/',
+  host: 'https://hazmat-reach-cat.herokuapp.com/',
+  // host: 'http://127.0.0.1:8000/',
 
   icons: 'static/front-end/assets'
   // icons:'assets'

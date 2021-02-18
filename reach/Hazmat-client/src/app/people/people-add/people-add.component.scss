@@ -34,3 +34,7 @@ form.normal-form{
 .mat-stroked-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary{
   background-color: #1003a0;
 }
+.mat-raised-button[disabled] {
+    color : rgba(0, 0, 0, 0.26);
+    background-color: transparent;
+  }

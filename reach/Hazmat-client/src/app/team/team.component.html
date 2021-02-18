@@ -83,7 +83,7 @@
       </ng-container>
       <ng-container matColumnDef="Role">
       <th mat-header-cell *matHeaderCellDef> Role </th>
-      <td mat-cell *matCellDef="let row"> {{row.Role}}  </td>
+      <td mat-cell *matCellDef="let row">{{roles.get(row.RoleID)}}  </td>
       </ng-container>
       <ng-container matColumnDef="Actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>

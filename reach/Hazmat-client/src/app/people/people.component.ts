@@ -34,7 +34,7 @@ export class PeopleComponent implements OnInit {
 
   peopleInformation: PeopleInfo[];
   dataSource= new MatTableDataSource<PeopleInfo>();
-  displayedColumns: string[] = ['ImageUrl', 'LastName', 'FirstName', 'Role', 'Status', 'Devices', 'HeartRate', 'BloodPressure', 'HeatIndex', 'SpO2', 'Actions'];
+  displayedColumns: string[] = ['ImageUrl','LastName', 'FirstName',  'Role', 'Status','Devices', 'HeartRate', 'BloodPressure', 'HeatIndex', 'SpO2', 'Actions'];
   display: string = 'deviceDetails';
   display1: string;
   editedPerson: PeopleInfo;

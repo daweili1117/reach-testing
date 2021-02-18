@@ -79,10 +79,11 @@ export class PeopleAddComponent implements OnInit {
         this.peopleFormGroup = new FormGroup({
           PersonID: new FormControl(this.editPeople.PersonID),
           TeamID: this.editPeople.Status == 'Unavailable'? new FormControl({value:this.editPeople.TeamID, disabled:true}):new FormControl(this.editPeople.TeamID),
-          FirstName: new FormControl(this.editPeople.FirstName, [Validators.required]),
-          LastName: new FormControl(this.editPeople.LastName, [Validators.required]),
+          FirstName: new FormControl(this.editPeople.FirstName, [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]),
+          LastName: new FormControl(this.editPeople.LastName, [Validators.required,Validators.pattern('^[a-zA-Z ]*$'
+          )]),
           RoleID: new FormControl(this.editPeople.RoleID),
-          ImageUrl: new FormControl(this.editPeople.ImageUrl),
+          // ImageUrl: new FormControl(this.editPeople.ImageUrl),
           HeartRateID: new FormControl(this.editPeople.HeartRateID),
           BloodPressureID: new FormControl(this.editPeople.BloodPressureID),
           HeatIndexID: new FormControl(this.editPeople.HeatIndexID),
@@ -98,10 +99,10 @@ export class PeopleAddComponent implements OnInit {
         this.peopleFormGroup = new FormGroup({
         PersonID: new FormControl(''),
         TeamID: new FormControl(''),
-        FirstName: new FormControl('', [Validators.required]),
-        LastName: new FormControl('', [Validators.required]),
+        FirstName: new FormControl('', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]),
+        LastName: new FormControl('', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]),
         RoleID: new FormControl(''),
-        ImageUrl: new FormControl(''),
+        // ImageUrl: new FormControl(''),
         HeartRateID: new FormControl(''),
         BloodPressureID: new FormControl(''),
         HeatIndexID: new FormControl(''),
@@ -182,9 +183,9 @@ onImageChanged(event) {
 
 savePerson(person: PeopleData) {
   console.log('person=='+JSON.stringify(person))
-  if (person.ImageUrl == '') {
-    person.ImageUrl = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=";
-  }
+  // if (person.ImageUrl == '') {
+  //   person.ImageUrl = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=";
+  // }
   
   if(this.action == 'Edit'){
     this.peopleService.editPerson(person)

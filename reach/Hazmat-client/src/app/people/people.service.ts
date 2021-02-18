@@ -62,15 +62,19 @@ export class PeopleService {
       FirstName: person.FirstName,
       LastName: person.LastName,
       RoleID: person.RoleID,
-      ImageUrl: person.ImageUrl,
       isDelete: false,
       TeamID: person.TeamID,
       HeartRateID: person.HeartRateID,
       BloodPressureID: person.BloodPressureID,
       HeatIndexID: person.HeatIndexID,
-      SpO2ID: person.SpO2ID
+      SpO2ID: person.SpO2ID,
+      CheckedIn: person.CheckedIn
+    }
+    if (person.ImageUrl) {
+      requestBody['ImageUrl'] = person.ImageUrl
     }
     return this.httpClient.post<PeopleData>(environment.host + 'person', requestBody, this.restheaderService.httpheader)
+    
   }
   
   addTeam(person:PeopleData, team:Team):Observable<Team>{
@@ -120,9 +124,12 @@ export class PeopleService {
       BloodPressureID: person.BloodPressureID,
       HeatIndexID: person.HeatIndexID,
       SpO2ID: person.SpO2ID,
-      Status: person.Status
+      Status: person.Status,
+      CheckedIn: person.CheckedIn,
+      CheckInTime: person.CheckInTime,
+      CheckOutTime: person.CheckOutTime,
     }
-    if (person.ImageUrl.length > 0 && !person.ImageUrl.includes('http') && !person.ImageUrl.includes('/media') ) {
+    if (person.ImageUrl&& person.ImageUrl.length > 0 && !person.ImageUrl.includes('http') && !person.ImageUrl.includes('/media') ) {
       requestBody['ImageUrl'] = person.ImageUrl
     }
 

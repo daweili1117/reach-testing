@@ -114,7 +114,8 @@ class SpO2Serializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PersonSerializer(serializers.ModelSerializer):
-    ImageUrl = Base64ImageField(required=False)
+    ImageUrl = Base64ImageField(required=False,allow_empty_file=True,allow_null=True,max_length=None)
+    
     class Meta:
         model = Person
         fields = '__all__'

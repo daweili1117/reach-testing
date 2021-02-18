@@ -17,6 +17,9 @@ export class PeopleInfo {
     BloodPressureID;
     HeatIndexID;
     SpO2ID;
+    CheckedIn;
+    CheckInTime;
+    CheckOutTime;
     
 }
 
@@ -34,6 +37,9 @@ export class PeopleData{
     BloodPressureID;
     HeatIndexID;
     SpO2ID;
+    CheckedIn;
+    CheckInTime;
+    CheckOutTime;
 }
 
 export class BloodPressure{

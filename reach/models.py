@@ -61,6 +61,9 @@ class Person(models.Model):
     ImageUrl = models.ImageField(upload_to=upload_path, null=True,blank=True)
     LastActive = models.DateTimeField(blank=True, null=True, auto_now_add= True)
     isDelete = models.BooleanField(default=False, blank=False, null=False)
+    CheckedIn = models.BooleanField(default=False, blank=False, null=False)
+    CheckInTime = models.DateTimeField(blank=True,null=True)
+    CheckOutTime = models.DateTimeField(blank=True,null=True)
 
     def __str__(self):
         return "%s %s" % (self.FirstName, self.LastName)

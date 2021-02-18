@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { DashboardDataService } from '../dashboard-data.service';
@@ -29,11 +30,52 @@ export class DashboardTeamMembersComponent implements OnInit {
     this.dashboardDataService.dashboardObj$.subscribe(
       data => {
         this.team = data;
+        this.displayName(this.team.crew)
+        setInterval(()=>{
+          this.displayName(this.team.crew)
+        },30000)
+        
       }
     )
+    
   }
 
   ngOnInit(): void {
+    //this.displayName('krishna on it')
   }
 
+  displayName(crew:any)
+  {
+    crew.forEach(member => {
+      var dt = new Date()
+      member.ElapsedCheckOutTimer = '--:--'
+      member.ElapsedCheckInTimer = '--:--'
+      if(member.CheckOutTime){
+        dt = new Date(member.CheckOutTime)
+        var current = new Date()
+        var diff = (current.getTime()-dt.getTime());
+        var days = Math.floor(diff / (60 * 60 * 24 * 1000));
+        var hours = Math.floor(diff / (60 * 60 * 1000)) - (days * 24);
+        var minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
+        var seconds = Math.floor(diff / 1000) - ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
+        member.ElapsedCheckOutTimer = hours+':'+minutes
+      }
+      if(member.CheckInTime){
+        var checkin = new Date(member.CheckInTime)
+        var diff = (dt.getTime()-checkin.getTime());
+        var days = Math.floor(diff / (60 * 60 * 24 * 1000));
+        var hours = Math.floor(diff / (60 * 60 * 1000)) - (days * 24);
+        var minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
+        var seconds = Math.floor(diff / 1000) - ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
+        member.ElapsedCheckInTimer = hours+':'+minutes
+      }
+    // alert(member.Timer)
+    });
+    // if(crew[0].CheckInTime){
+      // var dt = new Date()
+    //   var checkin = new Date(crew[0].CheckInTime)
+    //   alert(checkin.getTime() - dt.getTime())
+    // }
+    
+  }
 }

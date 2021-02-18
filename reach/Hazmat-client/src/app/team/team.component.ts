@@ -35,6 +35,7 @@ export class TeamComponent implements OnInit {
   unassignedPeople: any=[];
   personError:string;
   selectPerson = new FormControl();
+  roles = new Map();
 
   displayedColumns: string[] = ['Name', 'Description','People','Actions'];
   displayedPeopleColumns: string[] = ['LastName', 'FirstName', 'Role', 'Actions'];
@@ -43,6 +44,13 @@ export class TeamComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit() {
+    this.peopleService.getRole().subscribe((data) => {
+       for(var i=0;i<data.length;i++){
+          this.roles.set(data[i].RoleID,data[i].Name)
+       }
+       console.log('roles==='+this.roles.size)
+    });
+    
     this.f_firstPanel = true;
     this.getTeam();
     this.dataSource.paginator = this.paginator;
@@ -54,6 +62,7 @@ export class TeamComponent implements OnInit {
     forkJoin([
       this.teamService.getTeam(),
       this.peopleService.getPerson(), 
+      this.peopleService.getRole(),
     ]).subscribe(
       (data) =>{ 
         if(data.length > 0) { 

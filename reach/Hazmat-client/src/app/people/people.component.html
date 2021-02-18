@@ -34,7 +34,8 @@
                 Photo
             </th>
             <td mat-cell *matCellDef="let row">
-                <img src="{{row.ImageUrl}}" class="personImage" alt="image"> </td>
+                <img *ngIf="row.ImageUrl" src="{{row.ImageUrl}}" class="personImage" alt="image"> 
+                <img *ngIf="!row.ImageUrl" src="/static/No Photo/No-photo-available.jpg" class="personImage" alt="image" > </td>
         </ng-container>
 
         <ng-container matColumnDef="FirstName">
@@ -56,7 +57,10 @@
             <th mat-header-cell *matHeaderCellDef>
                 Role
             </th>
-            <td mat-cell *matCellDef="let row"> {{row.Role}}</td>
+            <td mat-cell *matCellDef="let row">
+                <output *ngIf="row.Role">{{row.Role}}</output>
+                <output *ngIf="!row.Role">--</output>
+                </td>   
         </ng-container>
 
 
@@ -73,28 +77,41 @@
             </th>
             <td mat-cell *matCellDef="let row"> 
                 <output *ngFor="let item of row.Devices">{{item}}<br></output>
+                <output *ngIf="row.Devices.length==0">--</output>
             </td>
         </ng-container>
        
         <ng-container matColumnDef="HeartRate">
             <th mat-header-cell *matHeaderCellDef> HR </th>
-            <td mat-cell *matCellDef="let row"> {{row.HeartRate}}</td>
+            <td mat-cell *matCellDef="let row"> 
+                <output *ngIf="row.HeartRate">{{row.HeartRate}}</output>
+                <output *ngIf="!row.HeartRate">--</output>
+            </td>
         </ng-container>
         
         <ng-container matColumnDef="BloodPressure">
             <th mat-header-cell *matHeaderCellDef> BP </th>
-            <td mat-cell *matCellDef="let row"> {{row.BloodPressure}}</td>
+            <td mat-cell *matCellDef="let row"> 
+                <output *ngIf="row.BloodPressure">{{row.BloodPressure}}</output>
+                <output *ngIf="!row.BloodPressure">--</output>
+            </td>
         </ng-container>
 
 
         <ng-container matColumnDef="HeatIndex">
             <th mat-header-cell *matHeaderCellDef> HI </th>
-            <td mat-cell *matCellDef="let row"> {{row.HeatIndex}}</td>
+            <td mat-cell *matCellDef="let row">
+                <output *ngIf="row.HeatIndex">{{row.HeatIndex}}</output>
+                <output *ngIf="!row.HeatIndex">--</output>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="SpO2">
             <th mat-header-cell *matHeaderCellDef> SPO2 </th>
-            <td mat-cell *matCellDef="let row"> {{row.SpO2}}</td>
+            <td mat-cell *matCellDef="let row">
+                <output *ngIf="row.SpO2">{{row.SpO2}}</output>
+                <output *ngIf="!row.SpO2">--</output>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="Actions">
@@ -126,39 +143,6 @@
             </td>
         </ng-container>
 
-        
-        <!-- <ng-container matColumnDef="header-row-first-group">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Photo</th>
-        </ng-container>
-        <ng-container matColumnDef="header-row-sec-group">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Last Name</th>
-        </ng-container>
-        <ng-container matColumnDef="header-row-third-group">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">First Name </th>
-        </ng-container>
-        <ng-container matColumnDef="header-row-fourth-group">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Team Name</th>
-        </ng-container>
-        <ng-container matColumnDef="header-row-fifth-group">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Role</th>
-        </ng-container>
-
-        <ng-container matColumnDef="header-row-sixth-group">
-            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Device</th>
-        </ng-container>
-
-        <ng-container matColumnDef="header-row-seventh-group">
-            <th mat-header-cell *matHeaderCellDef style="text-align: center;" [attr.colspan]="4">Person Threshold</th>
-        </ng-container>
-
-        <ng-container matColumnDef="header-row-eighth-group">
-            <th mat-header-cell *matHeaderCellDef style="text-align: center;" [attr.rowspan]="2"> Actions</th>
-        </ng-container>
-
-        <tr mat-header-row
-            *matHeaderRowDef="['header-row-first-group','header-row-sec-group','header-row-third-group'
-        ,'header-row-fourth-group', 'header-row-fifth-group','header-row-sixth-group','header-row-seventh-group','header-row-eighth-group']">
-        </tr> -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
