@@ -1,0 +1,152 @@
+<mat-toolbar>
+    <mat-toolbar-row fxLayoutAlign = "space-between">
+        <div style="padding-top: 20px;">
+            <h3 >People</h3>
+        </div>
+        <div>
+            <mat-form-field>
+                <div style="display: flex; flex-direction: row;">
+                    <div>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                    </div>
+                    <div>
+                        <mat-icon class="personIcons">search</mat-icon>
+                    </div>
+                    <div>
+                        <span>
+                            <mat-icon class="addIcons" style="color: green;" (click)="addPerson()">add</mat-icon>
+                        </span>
+                    </div>
+            
+                </div>
+            </mat-form-field>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+
+<div class="mat-elevation-z8">
+
+
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+        <ng-container matColumnDef="ImageUrl">
+            <th mat-header-cell *matHeaderCellDef>
+                Photo
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <img *ngIf="row.ImageUrl" src="{{row.ImageUrl}}" class="personImage" alt="image"> 
+                <img *ngIf="!row.ImageUrl" src="/static/No Photo/No-photo-available.jpg" class="personImage" alt="image" > </td>
+        </ng-container>
+
+        <ng-container matColumnDef="FirstName">
+            <th  mat-header-cell mat-sort-header *matHeaderCellDef>
+                First Name
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.FirstName}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="LastName">
+            <th  mat-header-cell mat-sort-header *matHeaderCellDef>
+                Last Name
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.LastName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Role">
+            <th mat-header-cell *matHeaderCellDef>
+                Role
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <output *ngIf="row.Role">{{row.Role}}</output>
+                <output *ngIf="!row.Role">--</output>
+                </td>   
+        </ng-container>
+
+
+        <ng-container matColumnDef="Status">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef >
+                Status
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.Status}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Devices">
+            <th mat-header-cell *matHeaderCellDef >
+                Device
+            </th>
+            <td mat-cell *matCellDef="let row"> 
+                <output *ngFor="let item of row.Devices">{{item}}<br></output>
+                <output *ngIf="row.Devices.length==0">--</output>
+            </td>
+        </ng-container>
+       
+        <ng-container matColumnDef="HeartRate">
+            <th mat-header-cell *matHeaderCellDef> HR </th>
+            <td mat-cell *matCellDef="let row"> 
+                <output *ngIf="row.HeartRate">{{row.HeartRate}}</output>
+                <output *ngIf="!row.HeartRate">--</output>
+            </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="BloodPressure">
+            <th mat-header-cell *matHeaderCellDef> BP </th>
+            <td mat-cell *matCellDef="let row"> 
+                <output *ngIf="row.BloodPressure">{{row.BloodPressure}}</output>
+                <output *ngIf="!row.BloodPressure">--</output>
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="HeatIndex">
+            <th mat-header-cell *matHeaderCellDef> HI </th>
+            <td mat-cell *matCellDef="let row">
+                <output *ngIf="row.HeatIndex">{{row.HeatIndex}}</output>
+                <output *ngIf="!row.HeatIndex">--</output>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="SpO2">
+            <th mat-header-cell *matHeaderCellDef> SPO2 </th>
+            <td mat-cell *matCellDef="let row">
+                <output *ngIf="row.SpO2">{{row.SpO2}}</output>
+                <output *ngIf="!row.SpO2">--</output>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef >
+                Actions
+            </th>
+            <!-- style="display:flex; padding-left: -1rem;" -->
+            <td mat-cell *matCellDef="let element" >
+                <button mat-icon-button  disabled>
+                <mat-icon style="color: green;" (click)="updatePerson(element)">
+                    edit
+                </mat-icon></button>
+                <button mat-icon-button>
+                <mat-icon  style="color: red;" (click)="deletePerson(element)">
+                    delete 
+                </mat-icon></button>
+                <button mat-icon-button>
+                <mat-icon *ngIf="(element.TeamID =='' || element.TeamID ==null) && element.Status=='Available'"  style="color: lime" (click)="changeStatus(element)">
+                    person
+                </mat-icon>
+                <mat-icon *ngIf="(element.TeamID =='' || element.TeamID ==null) && element.Status=='Unavailable'"  style="color: orange;" (click)="changeStatus(element)">
+                    person
+                </mat-icon>
+                <mat-icon *ngIf="element.TeamID"  style="color: grey;" (click)="displayWarning(element)">
+                    person
+                </mat-icon>
+                </button>
+                
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+</div>

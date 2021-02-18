@@ -1,0 +1,53 @@
+<h3>{{team.name}}</h3>
+
+<mat-card *ngFor="let member of team.crew">
+  <div>
+    <img id="image" *ngIf="member.ImageUrl" src={{member.ImageUrl}}>
+    <img id="image" *ngIf="!member.ImageUrl" src='/static/No Photo/No-photo-available.jpg'>
+  </div>
+  <div id="nameIcons">
+    <h4>{{member.LastName}}, {{member.FirstName}}</h4>
+    <br>
+    <mat-icon>signal_wifi_4_bar</mat-icon>
+    <mat-icon>battery_full</mat-icon>
+    <span>{{member.battery}}%</span>
+    <br>
+    
+    <span style="width: 86px;display:inline-block;">Check-In : </span><span class="time"
+    style="width: 70px;display:inline-block;" *ngIf="member.CheckInTime">{{member.CheckInTime|date:'shortTime'}}</span>
+    <span class="time" *ngIf="!member.CheckInTime" style="width: 70px;display:inline-block;">--:--</span>
+    <span class="time" style="width: 50px;display:inline-block;background-color: greenyellow;">{{member.ElapsedCheckInTimer}}</span>
+    <br>
+    <span style="width: 86px;display:inline-block;">Check-Out : </span><span class="time" *ngIf="member.CheckOutTime" style="width: 70px;display:inline-block;">{{member.CheckOutTime|date:'shortTime'}}</span>
+    <span class="time" *ngIf="!member.CheckOutTime" style="width: 70px;display:inline-block;">--:--</span>
+    <span class="time" style="width: 50px;display:inline-block;background-color: indianred;">{{member.ElapsedCheckOutTimer}}</span>
+    
+  </div>
+  <mat-icon *ngIf="member.inDanger" style="color: #B00020;">warning</mat-icon>
+  <div id="stats">
+    <mat-table [dataSource]="memberStats">
+        <ng-container matColumnDef="hr">
+          <mat-header-cell *matHeaderCellDef> HR </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.hr}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="bp">
+          <mat-header-cell *matHeaderCellDef> BP </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.bp}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="heatIndex">
+          <mat-header-cell *matHeaderCellDef> HI </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.heatIndex}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="spO2">
+          <mat-header-cell *matHeaderCellDef> SpO2 </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.spO2}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="resp">
+          <mat-header-cell *matHeaderCellDef> Resp </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.resp}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+  </div>
+</mat-card>
